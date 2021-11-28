@@ -1,6 +1,7 @@
 .app-info {
     background-color: #8e8ece;
-    border-radius: 5px;
-    padding: 3vh 2vw;
+    box-shadow: 15px 15px 30px rgba(0,0,0, .15);
+    border-radius: 4px;
+    padding: 2vh 2vw;
     color: beige;
 }

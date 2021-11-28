@@ -1,7 +1,8 @@
 .search-bar {
     background-color: #8e8ece;
-    border-radius: 5px;
-    padding: 5vh 2vw;
+    box-shadow: 15px 15px 30px rgba(0,0,0, .15);
+    border-radius: 4px;
+    padding: 3vh 2vw;
     margin: 2vh 0;
     color: beige;
 }

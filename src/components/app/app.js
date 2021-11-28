@@ -6,18 +6,24 @@ import AppFilter from "../app-filter/app-filter";
 import EmployeesList from "../employees-list/employees-list";
 import EmployeesAddForm from "../employees-add-form/employees-add-form";
 
-export default class App extends React.Component {
-    render() {
-        return (
-            <div className='app'>
-                <AppInfo />
-                <div className='search-bar'>
-                    <SearchBar />
-                    <AppFilter />
-                </div>
-                <EmployeesList />
-                <EmployeesAddForm />
+const App = () => {
+    const data = [
+        {name: 'Yegor G.', salary: 800, increase: false, id: 1},
+        {name: 'Galina T.', salary: 3000, increase: true, id: 2},
+        {name: 'Pavel S.', salary: 5000, increase: false, id: 3},
+    ];
+
+    return (
+        <div className='app'>
+            <AppInfo />
+            <div className='search-bar'>
+                <SearchBar />
+                <AppFilter />
             </div>
+            <EmployeesList data={data} />
+            <EmployeesAddForm />
+        </div>
     );
-    }
 }
+
+export default App;
