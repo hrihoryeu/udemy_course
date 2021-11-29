@@ -16,8 +16,7 @@ export default class App extends React.Component {
                 {name: 'Yegor G.', salary: 800, increase: false, rise: false, id: 1},
                 {name: 'Galina T.', salary: 3000, increase: true, rise: false, id: 2},
                 {name: 'Pavel S.', salary: 5000, increase: false, rise: false, id: 3},
-            ],
-            term: ''
+            ]
         }
         this.maxId = 4;
     }
@@ -57,7 +56,7 @@ export default class App extends React.Component {
     }
 
     render() {
-        const {data, term} = this.state;
+        const {data} = this.state;
         const employeesAmount = data.length;
         const employeesIncreaseAmount = data.filter(item => item.increase).length;
         return (
