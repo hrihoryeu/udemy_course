@@ -18,8 +18,10 @@ export default class EmployeesAddForm extends Component {
     };
 
     onSubmit = (e) => {
+        const {name, salary} = this.state;
         e.preventDefault();
-        this.props.onAdd(this.state.name, this.state.salary);
+        if (name.length < 3 || !salary) return;
+        this.props.onAdd(name, salary);
         this.setState({
             name: '',
             salary: '',

@@ -16,7 +16,8 @@ export default class App extends React.Component {
                 {name: 'Yegor G.', salary: 800, increase: false, rise: false, id: 1},
                 {name: 'Galina T.', salary: 3000, increase: true, rise: false, id: 2},
                 {name: 'Pavel S.', salary: 5000, increase: false, rise: false, id: 3},
-            ]
+            ],
+            term: ''
         }
         this.maxId = 4;
     }
@@ -44,29 +45,26 @@ export default class App extends React.Component {
         })
     }
 
-    onToggleIncrease = (id) => {
-        this.setState(({data}) => {
-            const index = data.findIndex(elem => elem.id === id);
-
-            const oldItem = data[index];
-            const newItem = {...oldItem, increase: !oldItem.increase};
-            const newArr = [...data.slice(0, index), newItem, ...data.slice(index + 1)];
-
-            return {
-                data: newArr
-            }
-        })
-    }
-
-    onToggleRise = (id) => {
-        console.log(`Rise this ${id}`)
+    onToggleProp = (id, prop) => {
+        this.setState(({data}) => ({
+            data: data.map(item => {
+                if (item.id === id) {
+                    return {...item, [prop]: !item[prop]}
+                }
+                return item;
+            })
+        }))
     }
 
     render() {
-        const {data} = this.state;
+        const {data, term} = this.state;
+        const employeesAmount = data.length;
+        const employeesIncreaseAmount = data.filter(item => item.increase).length;
         return (
             <div className='app'>
-                <AppInfo />
+                <AppInfo
+                    employeesAmount={employeesAmount}
+                    employeesIncreaseAmount={employeesIncreaseAmount} />
                 <div className='search-bar'>
                     <SearchBar />
                     <AppFilter />
@@ -74,8 +72,7 @@ export default class App extends React.Component {
                 <EmployeesList
                     data={data}
                     onDelete={this.deleteItem}
-                    onToggleIncrease={this.onToggleIncrease}
-                    onToggleRise={this.onToggleRise} />
+                    onToggleProp={this.onToggleProp} />
                 <EmployeesAddForm
                     onAdd={this.addItem} />
             </div>
