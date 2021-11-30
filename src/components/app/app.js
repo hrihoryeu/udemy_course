@@ -16,7 +16,9 @@ export default class App extends React.Component {
                 {name: 'Yegor G.', salary: 800, increase: false, rise: false, id: 1},
                 {name: 'Galina T.', salary: 3000, increase: true, rise: false, id: 2},
                 {name: 'Pavel S.', salary: 5000, increase: false, rise: false, id: 3},
-            ]
+            ],
+            term: '',
+            mode: 'increase'
         }
         this.maxId = 4;
     }
@@ -55,21 +57,55 @@ export default class App extends React.Component {
         }))
     }
 
+    searchEmployee = (items, term) => {
+        if (term.length === 0) {
+            return items;
+        }
+
+        return items.filter(item => {
+            return item.name.indexOf(term) > -1
+        })
+    }
+
+    onUpdateSearch = (term) => {
+        this.setState({term});
+    }
+
+    filterEmployee = (items, mode) => {
+        switch (mode) {
+            case 'increase':
+                return items.filter(item => item.increase);
+            case 'mt1000':
+                return items.filter(item => item.salary > 1000);
+            default:
+                return items;
+        }
+    }
+
+    onSelectMode = (mode) => {
+        this.setState({mode});
+    }
+
     render() {
-        const {data} = this.state;
+        const {data, term, mode} = this.state;
         const employeesAmount = data.length;
         const employeesIncreaseAmount = data.filter(item => item.increase).length;
+        const visibleData = this.filterEmployee(this.searchEmployee(data, term), mode);
+
         return (
             <div className='app'>
                 <AppInfo
                     employeesAmount={employeesAmount}
                     employeesIncreaseAmount={employeesIncreaseAmount} />
                 <div className='search-bar'>
-                    <SearchBar />
-                    <AppFilter />
+                    <SearchBar
+                        onUpdateSearch={this.onUpdateSearch} />
+                    <AppFilter
+                        mode={mode}
+                        onSelectMode={this.onSelectMode}/>
                 </div>
                 <EmployeesList
-                    data={data}
+                    data={visibleData}
                     onDelete={this.deleteItem}
                     onToggleProp={this.onToggleProp} />
                 <EmployeesAddForm
